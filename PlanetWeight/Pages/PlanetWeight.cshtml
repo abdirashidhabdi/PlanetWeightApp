@@ -1,0 +1,50 @@
+﻿@page
+@model PlanetWeights.Pages.PlanetWeightsModel
+@{
+    ViewData["Title"] = "Planet Weight Calculator";
+}
+
+<h4>Planet Weight</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" id="form1">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="planetWeight.weight" class="control-label"></label>
+                <input asp-for="planetWeight.weight" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="planetWeight.planet" class="control-label"></label>
+                @Html.DropDownListFor(model => model.planetWeight.planet, 
+                    new List<SelectListItem>{
+                        new SelectListItem() {Text = "Mercury", Value= "mercury"},
+                        new SelectListItem() {Text = "Venus", Value= "venus"},
+                        new SelectListItem() {Text = "The Moon", Value= "moon"},
+                        new SelectListItem() {Text = "Mars", Value= "mars"},
+                        new SelectListItem() {Text = "Jupiter", Value= "jupiter"},
+                        new SelectListItem() {Text = "Saturn", Value= "saturn"},
+                        new SelectListItem() {Text = "Uranus", Value= "uranus"},
+                        new SelectListItem() {Text = "Neptune", Value= "neptune"},
+                        new SelectListItem() {Text = "Pluto", Value= "pluto"}
+                    },
+                    new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.planetWeight.planet, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Calculate" class="btn btn-default" />
+            </div>
+            @if (ViewData.ModelState.IsValid)
+            {
+                <div class="form-group">
+                    <label asp-for="planetWeight.weightOnPlanet" class="control-label"></label>
+                    @Html.DisplayFor(model => model.planetWeight.weightOnPlanet, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            }
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

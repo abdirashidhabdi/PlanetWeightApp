@@ -1,0 +1,26 @@
+<Project DefaultsTargets="Rebuild" Sdk="Microsoft.NET.Sdk.Web">
+
+  <!-- Set properties -->
+  <PropertyGroup>
+	<TargetFramework>net6.0</TargetFramework>
+	<AssemblyName>PlanetWeight</AssemblyName>
+	<OutputPath>bin\Debug\net6.0\</OutputPath>
+  </PropertyGroup>
+
+  <!-- NB: I didn't include compile item because The .NET SDK includes 'Compile' items from my project directory by default. -->
+
+  <!-- Build .exe file -->
+  <Target Name="Clean">
+	<Delete Files="$(OutputPath)$(AsseblyName).exe" />	
+  </Target>
+
+  <!-- Build .exe file -->
+  <Target Name="Build">
+	<MakeDir Directories="$(OutputPath)" Condition="!Exists=('$(OutputPath)')" />
+	<Csc Sources="@(Compile)" OutputAssembly="$(OutputPath)$(AsseblyName).exe"/>
+  </Target>
+
+  <!-- Clean and Rebuild .exe file if it doesn't exist -->
+  <Target Name="Rebuild" DependsOnTargets="Clean;Build"/>
+
+</Project>
